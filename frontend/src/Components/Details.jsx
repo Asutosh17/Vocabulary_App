@@ -13,7 +13,7 @@ export const Details = () =>{
 
     useEffect(() =>{
       setLoad(true)
-      axios.get(`http://localhost:2345/dict/${id}`).then((response) =>{
+      axios.get(`https://vocabulary-app-065.herokuapp.com/dict/${id}`).then((response) =>{
         // console.log(response.data)
         setData(response.data);
         setLoad(false);
@@ -23,7 +23,7 @@ export const Details = () =>{
   
     return (
         <>
-          {load?"Loading...":<div style={{marginTop:'100px'}}>
+          {load?<p style={{margin:'100px'}}>Loading...</p>:<div style={{marginTop:'100px'}}>
             <CancelIcon onClick={()=>{navigate('/')}} style={{cursor:'pointer', fontSize:'40px' , position:'fixed' , right:'20px' , top:'80px'}} />
             <h1 style={{padding:'20px'}}>
               {data.word}

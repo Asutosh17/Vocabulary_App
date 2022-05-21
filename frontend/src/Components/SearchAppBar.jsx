@@ -63,7 +63,7 @@ export function SearchAppBar() {
   const searchWord = (e) =>{
     // console.log(e.target.value)
      setSearchShow(true)
-     axios.get("http://localhost:2345/dict").then((response) =>{
+     axios.get("https://vocabulary-app-065.herokuapp.com/dict").then((response) =>{
        console.log(response.data)
        let result = response.data;
        let ans = result.filter((element)=>{

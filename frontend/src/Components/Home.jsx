@@ -17,7 +17,6 @@ export const Home = () =>{
     const [loading,setLoading] = useState(true);
     const [word,setWord] = useState("");
     const [result,setResult] = useState({});
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const allData = useSelector((store)=>store.data)
     
@@ -27,7 +26,7 @@ export const Home = () =>{
 
     const getData = () =>{
         setLoading(true)
-        axios.get("http://localhost:2345/dict").then((response) =>{
+        axios.get("https://vocabulary-app-065.herokuapp.com/dict").then((response) =>{
             // console.log(response.data)
             dispatch(addData(response.data));
             setLoading(false)
@@ -39,7 +38,7 @@ export const Home = () =>{
     }
 
     const handle = () =>{
-        axios.get(`http://localhost:2345/vocab/${word}`).then((response) =>{
+        axios.get(`https://vocabulary-app-065.herokuapp.com/vocab/${word}`).then((response) =>{
         // console.log(response.data.results[0])
             setResult(response.data.results[0])
             // console.log(result)
@@ -55,7 +54,7 @@ export const Home = () =>{
 
 
     const addWord = () =>{
-        axios.get(`http://localhost:2345/vocab/${word}`).then((response) =>{
+        axios.get(`https://vocabulary-app-065.herokuapp.com/vocab/${word}`).then((response) =>{
          // console.log(response.data.results[0])
             setResult(response.data.results[0])
             
@@ -75,7 +74,7 @@ export const Home = () =>{
         if(result.id === word){
             let obj = {'word':word,'data':result}
             // console.log(result)
-            axios.post("http://localhost:2345/dict",obj).then(response =>{
+            axios.post("https://vocabulary-app-065.herokuapp.com/dict",obj).then(response =>{
                 // console.log(response.data)
                 setShow(!show)
                 alert("Added Successfully ✔️")
@@ -111,7 +110,7 @@ export const Home = () =>{
             </div>:""}
 
             <div style={{marginTop:'70px'}}>
-                {loading?"Loading...":allData.map((e)=>(
+                {loading?<p style={{margin:'100px'}}>Loading...</p>:allData.map((e)=>(
                     <CardBox e={e} />
                 ))}        
             </div>
