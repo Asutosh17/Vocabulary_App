@@ -64,10 +64,12 @@ export function SearchAppBar() {
     // console.log(e.target.value)
      setSearchShow(true)
      axios.get("https://vocabulary-app-065.herokuapp.com/dict").then((response) =>{
-       console.log(response.data)
+      //  console.log(response.data)
        let result = response.data;
        let ans = result.filter((element)=>{
-         return element.word.includes(e.target.value)
+         let word = e.target.value;
+         word = word.toLowerCase();
+         return element.word.includes(word)
        })
        setValue(ans);
       //  console.log(ans)

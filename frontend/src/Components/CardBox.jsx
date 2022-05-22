@@ -8,7 +8,7 @@ export const CardBox = (props)=>{
     const navigate = useNavigate()
     return (
         <>
-           <Card key={data._id} style={{marginTop:'1px' , cursor: 'pointer'}} sx={{ minWidth: 275 }} onClick={()=>{navigate(`/details/${data._id}`)}}>
+           <Card style={{marginTop:'1px' , cursor: 'pointer'}} sx={{ minWidth: 275 }} onClick={()=>{navigate(`/details/${data._id}`)}}>
                 <CardContent>
                     <Typography variant="h5" component="div">
                     {data.word}

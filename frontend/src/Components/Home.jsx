@@ -6,7 +6,6 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import Button from '@mui/material/Button';
 import {useState,useEffect} from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
 import {useSelector , useDispatch} from 'react-redux';
 import {addData} from '../Redux/action';
 import {CardBox} from './CardBox'
@@ -37,23 +36,8 @@ export const Home = () =>{
         setShow(!show)
     }
 
-    const handle = () =>{
-        axios.get(`https://vocabulary-app-065.herokuapp.com/vocab/${word}`).then((response) =>{
-        // console.log(response.data.results[0])
-            setResult(response.data.results[0])
-            // console.log(result)
-        
-        }).then(postData)
-        .catch((err)=>{
-            alert("Not Found Please Check Your Spelling")
-            setShow(!show)
-            console.log(err.message)
-        })    
-    }
-
-
-
     const addWord = () =>{
+        setWord(word.toLowerCase())
         axios.get(`https://vocabulary-app-065.herokuapp.com/vocab/${word}`).then((response) =>{
          // console.log(response.data.results[0])
             setResult(response.data.results[0])
@@ -65,9 +49,7 @@ export const Home = () =>{
             alert("Not Found Please Check Your Spelling")
             setShow(!show)
             console.log(err.message)
-        })        
-
-        handle()
+        })    
     }
 
     const postData = () =>{
@@ -111,7 +93,7 @@ export const Home = () =>{
 
             <div style={{marginTop:'70px'}}>
                 {loading?<p style={{margin:'100px'}}>Loading...</p>:allData.map((e)=>(
-                    <CardBox e={e} />
+                    <CardBox key={e._id} e={e} />
                 ))}        
             </div>
         </>

@@ -13,7 +13,7 @@ export const SearchResult = (props) =>{
         navigate(`/details/${value._id}`)
 
     }
-    console.log(props)
+    
     return (
         <>
            <div style={{marginTop:'100px',position:'fixed',top:'0px',right:'0%'}}>
