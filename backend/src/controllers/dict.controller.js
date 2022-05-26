@@ -17,8 +17,12 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const vocab = await Vocab.find().lean().exec();
-    return res.status(201).send(vocab);
+    var page = req.query.page || 1;
+    var size = req.query.size || 10;
+    const vocab = await Vocab.find().skip((page - 1) * size).limit(size).lean().exec();
+    const totalpages = Math.ceil((await Vocab.find().countDocuments()) / size)
+
+    return res.send({vocab , totalpages});
   } catch (err) {
     // console.log(req.body);
     return res.status(500).send(err.message);

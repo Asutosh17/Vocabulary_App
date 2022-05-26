@@ -76,6 +76,19 @@ export function SearchAppBar() {
      })
   }
 
+  const debounce = (func,delay) =>{
+    let timer;
+    return function (...args) {
+      if (timer) clearTimeout(timer);
+
+      timer = setTimeout(() => {
+          func.apply(this, args);
+      }, delay);
+    };
+  }
+
+  const optimise = debounce(searchWord,500)
+
   return (
     <>
     {searchShow?<SearchResult searchShow={searchShow} setSearchShow={setSearchShow} value={value} />:""}
@@ -100,7 +113,7 @@ export function SearchAppBar() {
           >
           
           </Typography>
-          <Search onChange={searchWord} >
+          <Search onChange={optimise} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

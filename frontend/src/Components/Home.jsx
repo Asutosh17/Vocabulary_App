@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import Button from '@mui/material/Button';
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useRef} from 'react';
 import axios from 'axios';
 import {useSelector , useDispatch} from 'react-redux';
 import {addData} from '../Redux/action';
@@ -13,23 +13,40 @@ import {CardBox} from './CardBox'
 export const Home = () =>{
 
     const [show,setShow] = useState(false);
-    const [loading,setLoading] = useState(true);
+    // const [loading,setLoading] = useState(true);
     const [word,setWord] = useState("");
     const [result,setResult] = useState({});
+    const [page,setPage] = useState(1);
+    const totalPage = useRef(1);
     const dispatch = useDispatch()
     const allData = useSelector((store)=>store.data)
     
     useEffect(() =>{
         getData()
-    },[])
+    },[page])
 
     const getData = () =>{
-        setLoading(true)
-        axios.get("https://vocabulary-app-065.herokuapp.com/dict").then((response) =>{
-            // console.log(response.data)
-            dispatch(addData(response.data));
-            setLoading(false)
+        // setLoading(true)
+        axios.get(`http://localhost:2345/dict?size=10&page=${page}`).then((response) =>{
+            
+            totalPage.current = response.data.totalpages
+            // console.log(response,totalPage)
+            dispatch(addData([...allData,...response.data.vocab]));
+            // setLoading(false)
         })
+    }
+
+    const scrollToEnd =()=>{
+        // console.log(page)
+        if(page<totalPage.current){
+           setPage(page+1);
+        }
+    }
+
+    window.onscroll = function (){
+        if(Math.ceil(window.innerHeight + document.documentElement.scrollTop) >= document.documentElement.offsetHeight){
+            scrollToEnd();
+        }
     }
 
     const showAdd = () =>{
@@ -92,7 +109,7 @@ export const Home = () =>{
             </div>:""}
 
             <div style={{marginTop:'70px'}}>
-                {loading?<p style={{margin:'100px'}}>Loading...</p>:allData.map((e)=>(
+                {allData.map((e)=>(
                     <CardBox key={e._id} e={e} />
                 ))}        
             </div>
