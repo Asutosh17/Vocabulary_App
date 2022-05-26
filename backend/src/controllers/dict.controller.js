@@ -17,6 +17,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
+
     var word = req.query.word
     var page = req.query.page || 1;
     var size = req.query.size || 10;
@@ -29,7 +30,6 @@ router.get("/", async (req, res) => {
 
     return res.send({vocab , totalpages});
   } catch (err) {
-    // console.log(req.body);
     return res.status(500).send(err.message);
   }
 });
