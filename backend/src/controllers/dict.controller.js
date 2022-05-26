@@ -17,8 +17,13 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
+    var word = req.query.word
     var page = req.query.page || 1;
     var size = req.query.size || 10;
+    if(word){
+      const vocab = await Vocab.find({word:word}).lean().exec();
+      return res.send(vocab);
+    }
     const vocab = await Vocab.find().skip((page - 1) * size).limit(size).lean().exec();
     const totalpages = Math.ceil((await Vocab.find().countDocuments()) / size)
 

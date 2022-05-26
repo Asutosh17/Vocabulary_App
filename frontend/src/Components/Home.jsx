@@ -27,7 +27,7 @@ export const Home = () =>{
 
     const getData = () =>{
         // setLoading(true)
-        axios.get(`http://localhost:2345/dict?size=10&page=${page}`).then((response) =>{
+        axios.get(`https://vocabulary-app-065.herokuapp.com/dict?size=10&page=${page}`).then((response) =>{
             
             totalPage.current = response.data.totalpages
             // console.log(response,totalPage)

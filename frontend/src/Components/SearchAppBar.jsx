@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
-import {useState,useEffect} from 'react';
+import {useState} from 'react';
 import {SearchResult} from './SearchResult'
 
 const Search = styled('div')(({ theme }) => ({
@@ -62,32 +62,27 @@ export function SearchAppBar() {
 
   const searchWord = (e) =>{
     // console.log(e.target.value)
+     let word = e.target.value;
      setSearchShow(true)
-     axios.get("https://vocabulary-app-065.herokuapp.com/dict").then((response) =>{
+     axios.get(`https://vocabulary-app-065.herokuapp.com/dict?word=${word}`).then((response) =>{
       //  console.log(response.data)
-       let result = response.data;
-       let ans = result.filter((element)=>{
-         let word = e.target.value;
-         word = word.toLowerCase();
-         return element.word.includes(word)
-       })
-       setValue(ans);
-      //  console.log(ans)
+       setValue(response.data);
      })
   }
 
-  const debounce = (func,delay) =>{
-    let timer;
-    return function (...args) {
-      if (timer) clearTimeout(timer);
+    const debounceing = (func) => {
+        let timer;
+        return function (...args) {
+        const context = this;
+        if (timer) clearTimeout(timer);
 
-      timer = setTimeout(() => {
-          func.apply(this, args);
-      }, delay);
+        timer = setTimeout(() => {
+            func.apply(context, args);
+        }, 500);
+        };
     };
-  }
 
-  const optimise = debounce(searchWord,500)
+  const newOptimise = debounceing(searchWord)
 
   return (
     <>
@@ -113,7 +108,7 @@ export function SearchAppBar() {
           >
           
           </Typography>
-          <Search onChange={optimise} >
+          <Search onChange={newOptimise} >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
