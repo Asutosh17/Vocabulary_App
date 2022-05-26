@@ -62,7 +62,7 @@ export function SearchAppBar() {
 
   const searchWord = (e) =>{
     // console.log(e.target.value)
-     let word = e.target.value;
+     let word = (e.target.value).toLowerCase();
      setSearchShow(true)
      axios.get(`https://vocabulary-app-065.herokuapp.com/dict?word=${word}`).then((response) =>{
       //  console.log(response.data)
