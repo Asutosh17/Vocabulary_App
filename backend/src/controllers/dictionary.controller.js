@@ -1,5 +1,5 @@
 const express = require('express');
-const Vocab = require('../model/vocab.model')
+const Vocabulary = require('../model/vocabulary.model')
 
 const router = express.Router();
 
@@ -7,8 +7,8 @@ router.post("/", async (req, res) => {
 //   console.log(req.body);
   try {
     // console.log(req.body,"here");
-    const vocab = await Vocab.create(req.body);
-    return res.status(201).send(vocab);
+    const vocabulary = await Vocabulary.create(req.body);
+    return res.status(201).send(vocabulary);
   } catch (err) {
     // console.log(req.body);
     return res.status(500).send(err.message);
@@ -22,13 +22,13 @@ router.get("/", async (req, res) => {
     var page = req.query.page || 1;
     var size = req.query.size || 10;
     if(word){
-      const vocab = await Vocab.find({word:word}).lean().exec();
-      return res.send(vocab);
+      const vocabulary = await Vocabulary.find({word:word}).lean().exec();
+      return res.send(vocabulary);
     }
-    const vocab = await Vocab.find().skip((page - 1) * size).limit(size).lean().exec();
-    const totalpages = Math.ceil((await Vocab.find().countDocuments()) / size)
+    const vocabulary = await Vocabulary.find().skip((page - 1) * size).limit(size).lean().exec();
+    const totalpages = Math.ceil((await Vocabulary.find().countDocuments()) / size)
 
-    return res.send({vocab , totalpages});
+    return res.send({vocabulary , totalpages});
   } catch (err) {
     return res.status(500).send(err.message);
   }
@@ -36,9 +36,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const vocab = await Vocab.findById(req.params.id).lean().exec();
+    const vocabulary = await Vocabulary.findById(req.params.id).lean().exec();
 
-    return res.send(vocab);
+    return res.send(vocabulary);
   } catch (err) {
     return res.status(500).send({ message: err.message });
   }

@@ -8,7 +8,7 @@ export const Details = () =>{
 
     const {id} = useParams();
     const navigate = useNavigate()
-    const [data,setData] = useState();
+    const [data,setData] = useState("");
     const [load,setLoad] = useState(true);
 
     useEffect(() =>{

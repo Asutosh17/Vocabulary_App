@@ -8,7 +8,7 @@ import {useState,useEffect,useRef} from 'react';
 import axios from 'axios';
 import {useSelector , useDispatch} from 'react-redux';
 import {addData} from '../Redux/action';
-import {CardBox} from './CardBox'
+import {CardDiv} from './CardDiv'
 
 export const Home = () =>{
 
@@ -63,7 +63,7 @@ export const Home = () =>{
         
         }).then(postData)
         .catch((err)=>{
-            alert("Not Found Please Check Your Spelling")
+            alert("Please Check Your Spelling")
             setShow(!show)
             console.log(err.message)
         })    
@@ -73,8 +73,8 @@ export const Home = () =>{
         if(result.id === word){
             let obj = {'word':word,'data':result}
             // console.log(result)
-            axios.post("https://vocabulary-app-065.herokuapp.com/dict",obj).then(response =>{
-                // console.log(response.data)
+            axios.post("https://localhost/dict",obj).then(response =>{
+                console.log(response.data)
                 setShow(!show)
                 alert("Added Successfully ✔️")
                 getData()
@@ -110,7 +110,7 @@ export const Home = () =>{
 
             <div style={{marginTop:'70px'}}>
                 {allData.map((e)=>(
-                    <CardBox key={e._id} e={e} />
+                    <CardDiv key={e._id} e={e} />
                 ))}        
             </div>
         </>

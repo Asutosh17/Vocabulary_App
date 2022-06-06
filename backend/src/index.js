@@ -1,17 +1,17 @@
 const express = require('express');
 const connect = require('./configs/db')
-const port = process.env.PORT || 2345
+const port = process.env.PORT || 5000
 
 var cors = require('cors');
 
 const corsOptions = {
   origin: "*",
   credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
+//   optionSuccessStatus: 200,
 };
 
-const vocabController = require('./controllers/vocab.controllers')
-const dictController = require('./controllers/dict.controller')
+const vocabController = require('./controllers/vocabulary.controllers')
+const dictController = require('./controllers/dictionary.controller')
 
 const app = express();
 

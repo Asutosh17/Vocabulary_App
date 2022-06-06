@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {useNavigate} from 'react-router-dom';
 
-export const CardBox = (props)=>{
+export const CardDiv = (props)=>{
     let data = props.e
     const navigate = useNavigate()
     return (
